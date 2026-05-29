@@ -62,7 +62,7 @@ def analisar_sentimento(texto):
 #     # Pega a URL de conexão das variáveis de ambiente (Configuração do Render)
 #     # Se não encontrar, usa uma string padrão (substitua pela sua para testes locais)
 #     DATABASE_URL = os.environ.get(
-#         "DATABASE_URL", "SUA_DATABASE_URL_DO_NEON_AQUI"
+#         "DATABASE_URL"
 #     )
 #     conn = psycopg2.connect(DATABASE_URL)
 #     return conn

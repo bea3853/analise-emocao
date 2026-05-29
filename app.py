@@ -62,7 +62,7 @@ def get_db_connection():
     # Pega a URL de conexão das variáveis de ambiente (Configuração do Render)
     # Se não encontrar, usa uma string padrão (substitua pela sua para testes locais)
     DATABASE_URL = os.environ.get(
-        "DATABASE_URL", "SUA_DATABASE_URL_DO_NEON_AQUI"
+        "DATABASE_URL", "postgresql://neondb_owner:npg_DfGYRS47bekx@ep-dry-glitter-apwv2xi3-pooler.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
     )
     conn = psycopg2.connect(DATABASE_URL)
     return conn

@@ -58,14 +58,32 @@ def analisar_sentimento(texto):
 
 
 # 3. Conexão com o Banco de Dados Neon (PostgreSQL)
+# def get_db_connection():
+#     # Pega a URL de conexão das variáveis de ambiente (Configuração do Render)
+#     # Se não encontrar, usa uma string padrão (substitua pela sua para testes locais)
+#     DATABASE_URL = os.environ.get(
+#         "DATABASE_URL", "SUA_DATABASE_URL_DO_NEON_AQUI"
+#     )
+#     conn = psycopg2.connect(DATABASE_URL)
+#     return conn
+
 def get_db_connection():
-    # Pega a URL de conexão das variáveis de ambiente (Configuração do Render)
-    # Se não encontrar, usa uma string padrão (substitua pela sua para testes locais)
-    DATABASE_URL = os.environ.get(
-        "DATABASE_URL", "SUA_DATABASE_URL_DO_NEON_AQUI"
-    )
-    conn = psycopg2.connect(DATABASE_URL)
-    return conn
+    # 1. Tenta buscar das variáveis de ambiente tradicionais (Render)
+    database_url = os.environ.get("DATABASE_URL")
+
+    # 2. Se não encontrar (ambiente local/Streamlit Cloud), busca no st.secrets
+    if not database_url and "DATABASE_URL" in st.secrets:
+        database_url = st.secrets["DATABASE_URL"]
+
+    # Se mesmo assim não encontrar nada, exibe um erro amigável na tela
+    if not database_url:
+        st.error(
+            "Configuração do banco de dados não encontrada! "
+            "Verifique as variáveis de ambiente no Render ou o arquivo de Secrets."
+        )
+        st.stop()
+
+    return psycopg2.connect(database_url)
 
 
 # Cria a tabela caso ela não exista
